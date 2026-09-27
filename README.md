@@ -125,9 +125,9 @@ Sin `RENDER_DEPLOY_HOOK_URL`, el job de despliegue falla explícitamente; por ta
 
 ## OWASP ZAP
 
-El workflow `.github/workflows/owasp-zap.yml` ejecuta un baseline scan reproducible y genera HTML/JSON. Después de tener una URL pública:
+El workflow `.github/workflows/owasp-zap.yml` ejecuta un full scan activo reproducible y genera HTML/JSON. Puede probar, entre otras categorías, XSS y SQL Injection; ejecútalo únicamente contra un entorno propio y autorizado. Después de tener una URL pública:
 
-1. GitHub → **Actions → CORE OWASP ZAP → Run workflow**.
+1. GitHub → **Actions → CORE OWASP ZAP Full Scan → Run workflow**.
 2. Introduce la URL del entorno de prueba.
 3. Descarga el artefacto `core-owasp-zap-report`.
 4. Conserva los resultados en `reports/security/`.
