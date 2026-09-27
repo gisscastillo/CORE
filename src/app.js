@@ -13,7 +13,11 @@ app.use(helmet({ contentSecurityPolicy: false }));
 app.use(express.json({ limit: '20kb' }));
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
-app.get('/api/health', (_req, res) => res.json({ status: 'ok', service: 'CORE' }));
+app.get('/api/health', (_req, res) => res.json({
+  status: 'ok',
+  service: 'CORE',
+  version: process.env.RENDER_GIT_COMMIT || 'local',
+}));
 app.use('/api/auth', authRoutes);
 app.use('/api/resources', resourceRoutes);
 

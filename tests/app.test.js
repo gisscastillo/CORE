@@ -28,7 +28,7 @@ describe('rutas generales', () => {
   test('expone el estado del servicio', async () => {
     const response = await request(app).get('/api/health');
     expect(response.status).toBe(200);
-    expect(response.body).toEqual({ status: 'ok', service: 'CORE' });
+    expect(response.body).toEqual({ status: 'ok', service: 'CORE', version: 'local' });
   });
 
   test('responde 404 sin exponer detalles', async () => {

@@ -13,7 +13,7 @@ Resultado:
 | Suites | 1 aprobada / 1 total |
 | Pruebas | 27 aprobadas / 27 total |
 | Statements | 99.31 % |
-| Branches | 90.69 % |
+| Branches | 91.11 % |
 | Functions | 100 % |
 | Lines | 99.30 % |
 

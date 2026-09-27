@@ -68,12 +68,20 @@ jobs:
     runs-on: ubuntu-latest
     environment: testing
     steps:
-      - name: Solicitar despliegue en Render
+      - name: Verificar Auto-Deploy de Render
         env:
-          RENDER_DEPLOY_HOOK_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+          TEST_ENV_URL: https://core-testing-0r6l.onrender.com
+          EXPECTED_COMMIT: ${{ github.sha }}
         run: |
-          if [ -z "$RENDER_DEPLOY_HOOK_URL" ]; then
-            echo "Falta el secreto RENDER_DEPLOY_HOOK_URL" >&2
-            exit 1
-          fi
-          curl --fail --show-error --silent --request POST "$RENDER_DEPLOY_HOOK_URL"
+          echo "Esperando el Auto-Deploy del commit $EXPECTED_COMMIT"
+          for attempt in $(seq 1 30); do
+            deployed_commit=$(curl --fail --silent "$TEST_ENV_URL/api/health" | jq -r '.version // empty' || true)
+            if [ "$deployed_commit" = "$EXPECTED_COMMIT" ]; then
+              echo "Entorno de prueba actualizado y saludable."
+              exit 0
+            fi
+            echo "Intento $attempt/30: Render todavía publica $deployed_commit"
+            sleep 10
+          done
+          echo "Render no publicó el commit esperado dentro del tiempo de verificación." >&2
+          exit 1

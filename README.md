@@ -266,7 +266,7 @@ La ejecución verificada del proyecto obtuvo:
 |---|---:|
 | Pruebas | 27/27 aprobadas |
 | Statements | 99.31 % |
-| Branches | 90.69 % |
+| Branches | 91.11 % |
 | Functions | 100 % |
 | Lines | 99.30 % |
 
@@ -316,7 +316,7 @@ Si GitHub solicita iniciar sesión, acepta la ventana del navegador. Nunca escri
 4. El job de pruebas debe ejecutarse automáticamente con cada `push`.
 5. Un círculo amarillo significa que sigue trabajando; una paloma verde significa que terminó bien; una X roja significa que algún paso falló.
 
-Al principio puede fallar solamente el despliegue porque aún no existe `RENDER_DEPLOY_HOOK_URL`. Eso se resuelve en la siguiente sección.
+El job final espera el Auto-Deploy de Render y comprueba que la URL pública esté ejecutando exactamente el mismo commit que GitHub.
 
 ## Publicar el entorno de prueba en Render
 
@@ -348,21 +348,14 @@ No necesitas Shell ni copiar la External Database URL. CORE crea las tablas auto
 
 Durante cada arranque, CORE aplica de forma segura el esquema `database/schema.sql` y prepara el administrador. El proceso no borra los recursos existentes.
 
-### Paso 3. Activar el despliegue desde GitHub Actions
+### Paso 3. Comprobar el despliegue desde GitHub Actions
 
-1. En Render abre `core-testing → Settings`.
-2. Busca **Deploy Hook** y créalo si todavía no existe.
-3. Copia la URL completa del hook. Trátala como contraseña.
-4. En GitHub abre el repositorio.
-5. Entra a **Settings → Secrets and variables → Actions**.
-6. Abre la pestaña **Secrets**.
-7. Presiona **New repository secret**.
-8. En **Name** escribe exactamente `RENDER_DEPLOY_HOOK_URL`.
-9. En **Secret** pega la URL de Render.
-10. Guarda el secreto.
-11. Haz un nuevo `push` o ejecuta manualmente **Actions → CORE CI/CD → Run workflow**.
+No necesitas crear un Deploy Hook ni guardar otro secreto. Render ya tiene habilitado Auto-Deploy para la rama `main`.
 
-Después de que el workflow esté verde, toma una captura de GitHub Actions y otra de CORE funcionando en la URL pública.
+1. En GitHub abre **Actions → CORE CI/CD**.
+2. Abre la ejecución correspondiente al último commit.
+3. El job `deploy-testing` esperará a Render y verificará el commit mediante `/api/health`.
+4. Cuando todos los jobs estén verdes, toma una captura de GitHub Actions y otra de CORE funcionando en la URL pública.
 
 ## Ejecutar OWASP ZAP desde GitHub
 
@@ -454,7 +447,7 @@ Marca cada casilla conforme avances:
 - [ ] Ejecutar `npm run test:coverage`.
 - [ ] Subir a GitHub y comprobar el job de pruebas.
 - [ ] Crear Render y comprobar la URL pública.
-- [ ] Agregar `RENDER_DEPLOY_HOOK_URL`.
+- [ ] Confirmar que `deploy-testing` esté verde en GitHub Actions.
 - [ ] Ejecutar SonarCloud y registrar métricas reales.
 - [ ] Ejecutar OWASP ZAP y guardar sus reportes reales.
 - [ ] Actualizar el ZIP final después de incorporar las evidencias.
