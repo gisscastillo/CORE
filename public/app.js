@@ -129,6 +129,14 @@ $('searchInput').addEventListener('input', (event) => {
   renderResources(state.resources.filter((item) => [item.nombre, item.categoria, item.estado, item.ubicacion].some((value) => value.toLowerCase().includes(term))));
 });
 $('newResourceButton').addEventListener('click', () => openResourceDialog());
+$('togglePassword').addEventListener('click', () => {
+  const input = $('password');
+  const show = input.type === 'password';
+  input.type = show ? 'text' : 'password';
+  $('togglePassword').textContent = show ? 'Ocultar' : 'Ver';
+  $('togglePassword').setAttribute('aria-label', show ? 'Ocultar contraseña' : 'Mostrar contraseña');
+  $('togglePassword').title = show ? 'Ocultar contraseña' : 'Mostrar contraseña';
+});
 $('closeDialog').addEventListener('click', () => $('resourceDialog').close());
 $('cancelDialog').addEventListener('click', () => $('resourceDialog').close());
 $('logoutButton').addEventListener('click', () => { clearSession(); showLogin(); });

@@ -12,7 +12,9 @@
 <body>
   <main id="loginView" class="login-shell">
     <section class="brand-panel">
-      <div class="brand-mark">C</div>
+      <div class="brand-glow glow-one"></div><div class="brand-glow glow-two"></div>
+      <div class="brand-mark"><span>C</span></div>
+      <div class="system-pill"><i></i> Plataforma segura y centralizada</div>
       <p class="eyebrow">Control organizacional</p>
       <h1>Los recursos de tu organización, en un solo lugar.</h1>
       <p class="brand-copy">Consulta disponibilidad, ubicación y estado de cada equipo con una vista clara y confiable.</p>
@@ -22,15 +24,16 @@
     </section>
     <section class="login-panel">
       <form id="loginForm" class="login-card">
-        <div class="logo"><span>CORE</span><small>Resource Management</small></div>
+        <div class="login-card-top"><div class="logo"><span>CORE</span><small>Resource Management</small></div><span class="access-badge">Acceso seguro</span></div>
         <h2>Bienvenido</h2>
         <p class="muted">Inicia sesión para acceder al panel.</p>
         <label for="username">Correo electrónico</label>
         <input id="username" name="username" type="email" autocomplete="username" placeholder="usuario@organizacion.com" required>
         <label for="password">Contraseña</label>
-        <input id="password" name="password" type="password" autocomplete="current-password" minlength="8" placeholder="••••••••" required>
+        <div class="password-field"><input id="password" name="password" type="password" autocomplete="current-password" minlength="8" placeholder="••••••••" required><button id="togglePassword" type="button" aria-label="Mostrar contraseña" title="Mostrar contraseña">Ver</button></div>
         <p id="loginError" class="form-error" role="alert"></p>
         <button class="btn btn-primary full" type="submit">Iniciar sesión</button>
+        <p class="secure-note"><span>✓</span> Sesión protegida con autenticación JWT</p>
       </form>
     </section>
   </main>
@@ -48,7 +51,7 @@
     <div class="content">
       <header class="topbar">
         <div><p class="eyebrow">Panel de control</p><h1>Gestión de recursos</h1></div>
-        <button id="newResourceButton" class="btn btn-primary admin-only">+ Registrar recurso</button>
+        <div class="topbar-actions"><span class="live-status"><i></i> Sistema activo</span><button id="newResourceButton" class="btn btn-primary admin-only">+ Registrar recurso</button></div>
       </header>
       <section id="summary" class="stats-grid"></section>
       <section class="table-card">
