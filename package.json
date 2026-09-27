@@ -1,0 +1,52 @@
+{
+  "name": "core-resource-management",
+  "version": "2.0.0",
+  "description": "CORE - Sistema web para la gestion de recursos organizacionales",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "test": "jest --runInBand",
+    "test:coverage": "jest --coverage --runInBand",
+    "create:admin": "node scripts/create-admin.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "dotenv": "^17.2.2",
+    "express": "^5.1.0",
+    "express-validator": "^7.2.1",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.16.3"
+  },
+  "devDependencies": {
+    "jest": "^30.1.3",
+    "jest-junit": "^16.0.0",
+    "supertest": "^7.1.4"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "collectCoverageFrom": [
+      "src/**/*.js",
+      "!src/server.js",
+      "!src/config/database.js"
+    ],
+    "coverageDirectory": "reports/unit-tests/coverage",
+    "coverageReporters": ["text", "html", "lcov", "json-summary"],
+    "coverageThreshold": {
+      "global": {
+        "branches": 80,
+        "functions": 80,
+        "lines": 80,
+        "statements": 80
+      }
+    },
+    "reporters": [
+      "default",
+      ["jest-junit", {"outputDirectory": "reports/unit-tests", "outputName": "junit.xml"}]
+    ]
+  }
+}

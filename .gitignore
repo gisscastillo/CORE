@@ -1,0 +1,12 @@
+node_modules/
+.env
+coverage/
+npm-debug.log*
+.DS_Store
+reports/unit-tests/coverage/
+reports/unit-tests/junit.xml
+reports/security/owasp-zap-report.html
+reports/security/owasp-zap-report.json
+outputs/
+CORE_ENTREGA/
+*.zip

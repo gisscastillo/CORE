@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CORE | Gestión de recursos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <main id="loginView" class="login-shell">
+    <section class="brand-panel">
+      <div class="brand-mark">C</div>
+      <p class="eyebrow">Control organizacional</p>
+      <h1>Los recursos de tu organización, en un solo lugar.</h1>
+      <p class="brand-copy">Consulta disponibilidad, ubicación y estado de cada equipo con una vista clara y confiable.</p>
+      <div class="feature-row"><span>✓</span> Inventario centralizado</div>
+      <div class="feature-row"><span>✓</span> Acceso seguro por roles</div>
+      <div class="feature-row"><span>✓</span> Seguimiento en tiempo real</div>
+    </section>
+    <section class="login-panel">
+      <form id="loginForm" class="login-card">
+        <div class="logo"><span>CORE</span><small>Resource Management</small></div>
+        <h2>Bienvenido</h2>
+        <p class="muted">Inicia sesión para acceder al panel.</p>
+        <label for="username">Correo electrónico</label>
+        <input id="username" name="username" type="email" autocomplete="username" placeholder="usuario@organizacion.com" required>
+        <label for="password">Contraseña</label>
+        <input id="password" name="password" type="password" autocomplete="current-password" minlength="8" placeholder="••••••••" required>
+        <p id="loginError" class="form-error" role="alert"></p>
+        <button class="btn btn-primary full" type="submit">Iniciar sesión</button>
+      </form>
+    </section>
+  </main>
+
+  <div id="appView" class="app-shell hidden">
+    <aside class="sidebar">
+      <div class="logo logo-light"><span>CORE</span><small>Resource Management</small></div>
+      <nav><button class="nav-item active">▦ <span>Recursos</span></button></nav>
+      <div class="sidebar-footer">
+        <div class="avatar" id="avatar">U</div>
+        <div><strong id="sidebarUser">Usuario</strong><small id="sidebarRole">Rol</small></div>
+        <button id="logoutButton" class="icon-button" title="Cerrar sesión">↪</button>
+      </div>
+    </aside>
+    <div class="content">
+      <header class="topbar">
+        <div><p class="eyebrow">Panel de control</p><h1>Gestión de recursos</h1></div>
+        <button id="newResourceButton" class="btn btn-primary admin-only">+ Registrar recurso</button>
+      </header>
+      <section id="summary" class="stats-grid"></section>
+      <section class="table-card">
+        <div class="table-header">
+          <div><h2>Inventario</h2><p class="muted" id="resourceCount">Cargando recursos…</p></div>
+          <input id="searchInput" class="search" type="search" placeholder="Buscar por nombre, categoría o ubicación">
+        </div>
+        <div id="globalMessage" class="message hidden" role="status"></div>
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>ID</th><th>Nombre</th><th>Categoría</th><th>Estado</th><th>Ubicación</th><th class="admin-only">Acciones</th></tr></thead>
+            <tbody id="resourceRows"></tbody>
+          </table>
+        </div>
+        <div id="emptyState" class="empty hidden">No hay recursos que mostrar.</div>
+      </section>
+    </div>
+  </div>
+
+  <dialog id="resourceDialog">
+    <form id="resourceForm" method="dialog" class="resource-form">
+      <div class="modal-header"><div><p class="eyebrow">Inventario CORE</p><h2 id="dialogTitle">Registrar recurso</h2></div><button id="closeDialog" type="button" class="icon-button">×</button></div>
+      <input id="resourceId" type="hidden">
+      <label for="resourceName">Nombre</label><input id="resourceName" maxlength="120" required>
+      <label for="resourceCategory">Categoría</label><input id="resourceCategory" maxlength="80" required>
+      <label for="resourceStatus">Estado</label>
+      <select id="resourceStatus" required><option>Disponible</option><option>Asignado</option><option>Mantenimiento</option><option>Baja</option></select>
+      <label for="resourceLocation">Ubicación</label><input id="resourceLocation" maxlength="120" required>
+      <p id="resourceError" class="form-error" role="alert"></p>
+      <div class="modal-actions"><button id="cancelDialog" type="button" class="btn btn-secondary">Cancelar</button><button type="submit" class="btn btn-primary">Guardar recurso</button></div>
+    </form>
+  </dialog>
+  <script src="/app.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+name: CORE OWASP ZAP
+
+on:
+  workflow_dispatch:
+    inputs:
+      target_url:
+        description: URL pública del entorno de prueba
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  zap-baseline:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Crear directorio de reportes
+        run: mkdir -p reports/security
+      - name: Escaneo OWASP ZAP
+        uses: zaproxy/action-baseline@v0.14.0
+        with:
+          target: ${{ inputs.target_url }}
+          rules_file_name: .zap/rules.tsv
+          cmd_options: '-a -j -m 5 -r reports/security/owasp-zap-report.html -J reports/security/owasp-zap-report.json'
+          artifact_name: core-owasp-zap-report
+          allow_issue_writing: false
