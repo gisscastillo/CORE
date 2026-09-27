@@ -31,6 +31,6 @@ jobs:
         with:
           target: ${{ inputs.target_url || 'https://core-testing-0r6l.onrender.com' }}
           rules_file_name: .zap/rules.tsv
-          cmd_options: '-a -j -m 10 -r reports/security/owasp-zap-report.html -J reports/security/owasp-zap-report.json'
+          cmd_options: '-a -j'
           artifact_name: core-owasp-zap-report
           allow_issue_writing: false
