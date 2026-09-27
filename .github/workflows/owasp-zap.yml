@@ -1,6 +1,9 @@
 name: CORE OWASP ZAP Full Scan
 
 on:
+  workflow_run:
+    workflows: ['CORE CI/CD']
+    types: [completed]
   workflow_dispatch:
     inputs:
       target_url:
@@ -14,6 +17,10 @@ permissions:
 
 jobs:
   zap-full-scan:
+    if: >-
+      ${{ github.event_name == 'workflow_dispatch' ||
+          (github.event.workflow_run.conclusion == 'success' &&
+           github.event.workflow_run.head_branch == 'main') }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -22,7 +29,7 @@ jobs:
       - name: Escaneo OWASP ZAP
         uses: zaproxy/action-full-scan@v0.13.0
         with:
-          target: ${{ inputs.target_url }}
+          target: ${{ inputs.target_url || 'https://core-testing-0r6l.onrender.com' }}
           rules_file_name: .zap/rules.tsv
           cmd_options: '-a -j -m 10 -r reports/security/owasp-zap-report.html -J reports/security/owasp-zap-report.json'
           artifact_name: core-owasp-zap-report

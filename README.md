@@ -359,25 +359,22 @@ No necesitas crear un Deploy Hook ni guardar otro secreto. Render ya tiene habil
 
 ## Ejecutar OWASP ZAP desde GitHub
 
-Haz este paso únicamente cuando la URL pública de Render funcione. El análisis es activo y solo debe dirigirse a tu propio entorno de prueba.
+El análisis se ejecuta automáticamente después de que `CORE CI/CD` termina correctamente en `main`. Es un análisis activo dirigido exclusivamente al entorno de prueba propio de CORE.
 
 1. En GitHub abre **Actions**.
 2. En la lista izquierda selecciona **CORE OWASP ZAP Full Scan**.
-3. Presiona **Run workflow**.
-4. En `target_url` pega la URL pública completa de Render, por ejemplo `https://core-testing.onrender.com`.
-5. Presiona el botón verde **Run workflow**.
-6. Espera a que finalice. El full scan puede tardar varios minutos.
-7. Abre la ejecución terminada.
-8. Baja hasta **Artifacts**.
-9. Descarga `core-owasp-zap-report`.
-10. Descomprime el archivo descargado.
-11. Copia `owasp-zap-report.html` y `owasp-zap-report.json` a:
+3. Espera a que finalice la ejecución automática. El full scan puede tardar varios minutos.
+4. Abre la ejecución terminada.
+5. Baja hasta **Artifacts**.
+6. Descarga `core-owasp-zap-report`.
+7. Descomprime el archivo descargado.
+8. Copia `owasp-zap-report.html` y `owasp-zap-report.json` a:
 
 ```text
 reports/security/
 ```
 
-12. Abre el HTML y registra únicamente los hallazgos que realmente aparezcan. No cambies un hallazgo para que el resultado se vea mejor.
+9. Abre el HTML y registra únicamente los hallazgos que realmente aparezcan. No cambies un hallazgo para que el resultado se vea mejor.
 
 ## Ejecutar SonarCloud
 
