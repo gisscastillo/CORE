@@ -252,7 +252,7 @@ No necesitas tener CORE encendido ni PostgreSQL abierto para estas pruebas.
 npm run test:coverage
 ```
 
-3. Espera a que aparezca `Tests: 24 passed, 24 total`.
+3. Espera a que aparezca `Tests: 27 passed, 27 total`.
 4. Confirma que statements, branches, functions y lines están por encima de 80 %.
 5. Para abrir el reporte visual, en VS Code busca este archivo y ábrelo en el navegador:
 
@@ -264,11 +264,11 @@ La ejecución verificada del proyecto obtuvo:
 
 | Métrica | Resultado |
 |---|---:|
-| Pruebas | 24/24 aprobadas |
-| Statements | 99.21 % |
-| Branches | 90.62 % |
+| Pruebas | 27/27 aprobadas |
+| Statements | 99.31 % |
+| Branches | 90.69 % |
 | Functions | 100 % |
-| Lines | 99.20 % |
+| Lines | 99.30 % |
 
 ## Subir CORE a GitHub
 
@@ -335,27 +335,18 @@ Render alojará temporalmente la aplicación y PostgreSQL. La disponibilidad y e
 
 ### Paso 2. Inicializar la base de Render
 
+No necesitas Shell ni copiar la External Database URL. CORE crea las tablas automáticamente cuando arranca.
+
 1. Abre el servicio web `core-testing` en Render.
-2. Abre su pestaña **Shell**.
-3. Ejecuta:
+2. Entra en **Environment**.
+3. Presiona **Add Environment Variable**.
+4. Agrega `ADMIN_USERNAME` con el valor `admin@core.local`.
+5. Agrega `ADMIN_PASSWORD` con una contraseña de al menos 8 caracteres que recuerdes.
+6. Presiona **Save Changes**.
+7. Render hará un nuevo despliegue automáticamente.
+8. Cuando aparezca **Deploy live**, abre la URL pública e inicia sesión con esas dos variables.
 
-```text
-npm run db:init
-```
-
-4. En **Environment**, agrega temporalmente:
-   - `ADMIN_USERNAME` con el correo del administrador.
-   - `ADMIN_PASSWORD` con una contraseña segura.
-5. Guarda los cambios y espera el redeploy.
-6. Regresa a **Shell** y ejecuta:
-
-```text
-npm run create:admin
-```
-
-7. Abre la URL pública que Render asignó y comprueba el login.
-
-Si tu plan no incluye Shell, abre la base `core-testing-db`, copia su **External Database URL**, colócala temporalmente como `DATABASE_URL` en tu `.env` local, cambia `DATABASE_SSL=true` y ejecuta `npm run db:init` y `npm run create:admin` desde VS Code. Después restaura la conexión local de tu `.env`.
+Durante cada arranque, CORE aplica de forma segura el esquema `database/schema.sql` y prepara el administrador. El proceso no borra los recursos existentes.
 
 ### Paso 3. Activar el despliegue desde GitHub Actions
 

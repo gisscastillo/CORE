@@ -10,6 +10,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const app = require('../src/app');
 const pool = require('../src/config/database');
+const bootstrapDatabase = require('../src/services/bootstrapService');
 
 const adminToken = jwt.sign({ id: 1, role: 'administrador' }, process.env.JWT_SECRET);
 const userToken = jwt.sign({ id: 2, role: 'usuario' }, process.env.JWT_SECRET);
@@ -196,5 +197,49 @@ describe('gestión de recursos y roles', () => {
     const response = await request(app).get('/api/resources').set('Authorization', `Bearer ${userToken}`);
     expect(response.status).toBe(500);
     expect(response.body).toEqual({ message: 'Error interno del servidor' });
+  });
+});
+
+describe('inicio automático de la base de datos', () => {
+  const originalUsername = process.env.ADMIN_USERNAME;
+  const originalPassword = process.env.ADMIN_PASSWORD;
+
+  afterEach(() => {
+    if (originalUsername === undefined) delete process.env.ADMIN_USERNAME;
+    else process.env.ADMIN_USERNAME = originalUsername;
+    if (originalPassword === undefined) delete process.env.ADMIN_PASSWORD;
+    else process.env.ADMIN_PASSWORD = originalPassword;
+  });
+
+  test('crea las tablas aunque no se configure administrador', async () => {
+    delete process.env.ADMIN_USERNAME;
+    delete process.env.ADMIN_PASSWORD;
+    pool.query.mockResolvedValue({});
+
+    await bootstrapDatabase();
+
+    expect(pool.query).toHaveBeenCalledTimes(1);
+    expect(pool.query.mock.calls[0][0]).toContain('CREATE TABLE IF NOT EXISTS users');
+  });
+
+  test('crea o actualiza el administrador configurado', async () => {
+    process.env.ADMIN_USERNAME = 'ADMIN@core.local';
+    process.env.ADMIN_PASSWORD = 'ClaveSegura1';
+    pool.query.mockResolvedValue({});
+
+    await bootstrapDatabase();
+
+    expect(pool.query).toHaveBeenCalledTimes(2);
+    const parameters = pool.query.mock.calls[1][1];
+    expect(parameters[0]).toBe('admin@core.local');
+    expect(await bcrypt.compare('ClaveSegura1', parameters[1])).toBe(true);
+  });
+
+  test('rechaza configuración incompleta del administrador', async () => {
+    process.env.ADMIN_USERNAME = 'admin@core.local';
+    delete process.env.ADMIN_PASSWORD;
+    pool.query.mockResolvedValue({});
+
+    await expect(bootstrapDatabase()).rejects.toThrow('deben configurarse juntos');
   });
 });

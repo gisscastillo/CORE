@@ -11,11 +11,11 @@ Resultado:
 | Indicador | Resultado |
 |---|---:|
 | Suites | 1 aprobada / 1 total |
-| Pruebas | 24 aprobadas / 24 total |
-| Statements | 99.21 % |
-| Branches | 90.62 % |
+| Pruebas | 27 aprobadas / 27 total |
+| Statements | 99.31 % |
+| Branches | 90.69 % |
 | Functions | 100 % |
-| Lines | 99.20 % |
+| Lines | 99.30 % |
 
 Todas las métricas superaron el umbral obligatorio de 80 %. El comando genera `junit.xml`, `coverage/index.html`, `coverage/lcov.info` y `coverage/coverage-summary.json` en este directorio. Los archivos generados están ignorados en Git para evitar evidencia obsoleta; se incluyen en el ZIP académico creado después de la ejecución verificada.
 
