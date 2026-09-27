@@ -3,6 +3,7 @@
   "version": "2.0.0",
   "description": "CORE - Sistema web para la gestion de recursos organizacionales",
   "main": "src/server.js",
+  "packageManager": "npm@10.9.3",
   "scripts": {
     "start": "node src/server.js",
     "dev": "node --watch src/server.js",
@@ -12,7 +13,8 @@
     "create:admin": "node scripts/create-admin.js"
   },
   "engines": {
-    "node": ">=20"
+    "node": "20.x",
+    "npm": "10.x"
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",
