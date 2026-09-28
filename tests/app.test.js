@@ -11,6 +11,7 @@ const jwt = require('jsonwebtoken');
 const app = require('../src/app');
 const pool = require('../src/config/database');
 const bootstrapDatabase = require('../src/services/bootstrapService');
+const { errorHandler } = require('../src/middleware/errorHandler');
 
 const adminToken = jwt.sign({ id: 1, role: 'administrador' }, process.env.JWT_SECRET);
 const userToken = jwt.sign({ id: 2, role: 'usuario' }, process.env.JWT_SECRET);
@@ -35,6 +36,38 @@ describe('rutas generales', () => {
     const response = await request(app).get('/api/inexistente');
     expect(response.status).toBe(404);
     expect(response.body.message).toBe('Ruta no encontrada');
+  });
+});
+
+describe('registro seguro de errores', () => {
+  test('elimina saltos de línea antes de escribir datos en el log', () => {
+    const originalNodeEnv = process.env.NODE_ENV;
+    process.env.NODE_ENV = 'production';
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const response = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn(),
+    };
+
+    errorHandler(
+      new Error('mensaje\r\ninyectado'),
+      { method: 'GET\r\n', originalUrl: '/ruta\r\nfalsa' },
+      response,
+      jest.fn(),
+    );
+
+    const logged = consoleSpy.mock.calls[0][0];
+    expect(logged).not.toMatch(/[\r\n]/);
+    expect(JSON.parse(logged)).toEqual({
+      method: 'GET',
+      path: '/rutafalsa',
+      message: 'mensaje  inyectado',
+    });
+    expect(response.status).toHaveBeenCalledWith(500);
+    expect(response.json).toHaveBeenCalledWith({ message: 'Error interno del servidor' });
+
+    consoleSpy.mockRestore();
+    process.env.NODE_ENV = originalNodeEnv;
   });
 });
 
