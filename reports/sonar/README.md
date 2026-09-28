@@ -1,30 +1,32 @@
-# Resultados SonarQube / SonarCloud
+# Resultados SonarQube Cloud
 
-Estado: **CONFIGURADO; ANÁLISIS PENDIENTE DE AUTENTICACIÓN EXTERNA**.
+Estado: **EJECUTADO Y APROBADO**.
 
-La integración y la importación de cobertura están configuradas, pero no se inventan métricas. El workflow `CORE CI/CD` terminó correctamente para la versión `37f4617a6e4c483494ce7d87e29f70a2f9ef3f02` en la ejecución `36369375488`; el paso **Analizar en SonarCloud** quedó omitido porque el repositorio todavía no tiene `SONAR_TOKEN`, `SONAR_ORGANIZATION` y `SONAR_PROJECT_KEY`.
+SonarQube Cloud analizó el proyecto `gisscastillo_CORE` desde GitHub Actions con la cobertura LCOV generada por Jest. El análisis definitivo corresponde al commit `c0037b4` y el pipeline `36431908719`.
 
-Evidencia del estado actual:
+Evidencia verificable:
 
-- Workflow: `https://github.com/gisscastillo/CORE/actions/runs/36369375488`
-- Job SonarCloud: `https://github.com/gisscastillo/CORE/actions/runs/36369375488/job/108762291284`
-- Pruebas y cobertura previas al análisis: ejecutadas correctamente.
-- Paso de análisis: `skipped` por ausencia de credenciales, no por un error del código.
-
-Después de ejecutar el workflow, registrar aquí únicamente los valores mostrados por SonarCloud:
+- Proyecto: https://sonarcloud.io/project/overview?id=gisscastillo_CORE
+- Pipeline CI/CD: https://github.com/gisscastillo/CORE/actions/runs/36431908719
+- Quality Gate: **Passed / OK**.
+- Fecha de verificación: 28 de septiembre de 2026.
 
 | Métrica | Resultado real |
-|---|---|
-| Code Smells | Pendiente |
-| Technical Debt | Pendiente |
-| Bugs | Pendiente |
-| Vulnerabilities | Pendiente |
-| Security Hotspots | Pendiente |
-| Coverage | Pendiente |
-| Duplications | Pendiente |
+|---|---:|
+| Quality Gate | Aprobado |
+| Bugs | 0 |
+| Vulnerabilities | 0 |
+| Security Hotspots | 0 |
+| Code Smells | 16 |
+| Technical Debt | 135 minutos (2 h 15 min) |
+| Coverage | 98.5 % |
+| Coverage on New Code | 100 % |
+| Duplicated Lines | 0.0 % |
+| Reliability Rating | A |
+| Security Rating | A |
+| Maintainability Rating | A |
+| Líneas de código analizadas | 1,085 |
 
-Configuración externa requerida:
+Durante la primera ejecución SonarQube Cloud detectó dos vulnerabilidades: una posible inserción de contenido en el DOM y una posible inyección en logs. Ambas se corrigieron mediante construcción segura de nodos DOM, normalización del contenido del log y una prueba unitaria específica. El análisis final registra **0 vulnerabilidades**.
 
-- Variable de repositorio `SONAR_ORGANIZATION`: clave de la organización visible en **SonarCloud → My Account → Organizations**.
-- Variable de repositorio `SONAR_PROJECT_KEY`: clave visible en **Project Information**.
-- Secreto `SONAR_TOKEN`: créalo en **SonarCloud → My Account → Security → Generate Tokens**.
+Las 16 observaciones restantes son Code Smells de mantenibilidad y no impiden el Quality Gate. Se conservan como entrada verificable del plan de mejora continua.

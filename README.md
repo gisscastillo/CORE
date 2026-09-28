@@ -265,11 +265,11 @@ La ejecución verificada del proyecto obtuvo:
 
 | Métrica | Resultado |
 |---|---:|
-| Pruebas | 30/30 aprobadas |
-| Statements | 99.35 % |
-| Branches | 91.48 % |
+| Pruebas | 31/31 aprobadas |
+| Statements | 100 % |
+| Branches | 93.61 % |
 | Functions | 100 % |
-| Lines | 99.34 % |
+| Lines | 100 % |
 
 ## Subir CORE a GitHub
 
@@ -446,7 +446,7 @@ Marca cada casilla conforme avances:
 - [x] Subir a GitHub y comprobar el job de pruebas.
 - [x] Crear Render y comprobar la URL pública.
 - [x] Confirmar que `deploy-testing` esté verde en GitHub Actions.
-- [ ] Ejecutar SonarCloud y registrar métricas reales.
+- [x] Ejecutar SonarCloud y registrar métricas reales.
 - [x] Ejecutar OWASP ZAP y guardar sus reportes reales.
 - [x] Actualizar el ZIP final después de incorporar las evidencias disponibles.
 
@@ -461,7 +461,7 @@ scripts/             inicialización DB y creación del administrador
 .github/workflows/   CI/CD, SonarCloud y OWASP ZAP
 reports/unit-tests/  JUnit y cobertura real
 reports/security/    reporte real de OWASP ZAP
-reports/sonar/       estado verificable y guía para completar SonarCloud
+reports/sonar/       métricas reales y Quality Gate aprobado de SonarCloud
 docs/                informe académico de cierre
 ```
 
