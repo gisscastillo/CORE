@@ -256,17 +256,25 @@ describe('gestión de recursos y roles', () => {
 describe('inicio automático de la base de datos', () => {
   const originalUsername = process.env.ADMIN_USERNAME;
   const originalPassword = process.env.ADMIN_PASSWORD;
+  const originalUserUsername = process.env.USER_USERNAME;
+  const originalUserPassword = process.env.USER_PASSWORD;
 
   afterEach(() => {
     if (originalUsername === undefined) delete process.env.ADMIN_USERNAME;
     else process.env.ADMIN_USERNAME = originalUsername;
     if (originalPassword === undefined) delete process.env.ADMIN_PASSWORD;
     else process.env.ADMIN_PASSWORD = originalPassword;
+    if (originalUserUsername === undefined) delete process.env.USER_USERNAME;
+    else process.env.USER_USERNAME = originalUserUsername;
+    if (originalUserPassword === undefined) delete process.env.USER_PASSWORD;
+    else process.env.USER_PASSWORD = originalUserPassword;
   });
 
   test('crea las tablas aunque no se configure administrador', async () => {
     delete process.env.ADMIN_USERNAME;
     delete process.env.ADMIN_PASSWORD;
+    delete process.env.USER_USERNAME;
+    delete process.env.USER_PASSWORD;
     pool.query.mockResolvedValue({});
 
     await bootstrapDatabase();
@@ -278,6 +286,8 @@ describe('inicio automático de la base de datos', () => {
   test('crea o actualiza el administrador configurado', async () => {
     process.env.ADMIN_USERNAME = 'ADMIN@core.local';
     process.env.ADMIN_PASSWORD = 'ClaveSegura1';
+    delete process.env.USER_USERNAME;
+    delete process.env.USER_PASSWORD;
     pool.query.mockResolvedValue({});
 
     await bootstrapDatabase();
@@ -286,11 +296,30 @@ describe('inicio automático de la base de datos', () => {
     const parameters = pool.query.mock.calls[1][1];
     expect(parameters[0]).toBe('admin@core.local');
     expect(await bcrypt.compare('ClaveSegura1', parameters[1])).toBe(true);
+    expect(parameters[2]).toBe('administrador');
+  });
+
+  test('crea o actualiza el usuario configurado', async () => {
+    delete process.env.ADMIN_USERNAME;
+    delete process.env.ADMIN_PASSWORD;
+    process.env.USER_USERNAME = 'USUARIO@core.local';
+    process.env.USER_PASSWORD = 'UsuarioCore2026!';
+    pool.query.mockResolvedValue({});
+
+    await bootstrapDatabase();
+
+    expect(pool.query).toHaveBeenCalledTimes(2);
+    const parameters = pool.query.mock.calls[1][1];
+    expect(parameters[0]).toBe('usuario@core.local');
+    expect(await bcrypt.compare('UsuarioCore2026!', parameters[1])).toBe(true);
+    expect(parameters[2]).toBe('usuario');
   });
 
   test('rechaza configuración incompleta del administrador', async () => {
     process.env.ADMIN_USERNAME = 'admin@core.local';
     delete process.env.ADMIN_PASSWORD;
+    delete process.env.USER_USERNAME;
+    delete process.env.USER_PASSWORD;
     pool.query.mockResolvedValue({});
 
     await expect(bootstrapDatabase()).rejects.toThrow('deben configurarse juntos');

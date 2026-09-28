@@ -9,27 +9,44 @@ async function bootstrapDatabase() {
   await pool.query(schema);
   console.log('Base de datos CORE inicializada.');
 
-  const username = process.env.ADMIN_USERNAME;
-  const password = process.env.ADMIN_PASSWORD;
+  const profiles = [
+    {
+      label: 'Administrador',
+      username: process.env.ADMIN_USERNAME,
+      password: process.env.ADMIN_PASSWORD,
+      role: 'administrador',
+      prefix: 'ADMIN',
+    },
+    {
+      label: 'Usuario',
+      username: process.env.USER_USERNAME,
+      password: process.env.USER_PASSWORD,
+      role: 'usuario',
+      prefix: 'USER',
+    },
+  ];
 
-  if (!username && !password) {
-    console.log('Administrador automático omitido: variables ADMIN no configuradas.');
-    return;
+  for (const profile of profiles) {
+    const { label, username, password, role, prefix } = profile;
+    if (!username && !password) {
+      console.log(`${label} automático omitido: variables ${prefix} no configuradas.`);
+      continue;
+    }
+
+    if (!username || !password || password.length < 8) {
+      throw new Error(`${prefix}_USERNAME y ${prefix}_PASSWORD (mínimo 8 caracteres) deben configurarse juntos`);
+    }
+
+    const passwordHash = await bcrypt.hash(password, Number(process.env.BCRYPT_ROUNDS || 12));
+    await pool.query(
+      `INSERT INTO users (username, password_hash, role)
+       VALUES ($1, $2, $3)
+       ON CONFLICT (username)
+       DO UPDATE SET password_hash = EXCLUDED.password_hash, role = EXCLUDED.role`,
+      [username.toLowerCase(), passwordHash, role],
+    );
+    console.log(`${label} CORE preparado: ${username.toLowerCase()}`);
   }
-
-  if (!username || !password || password.length < 8) {
-    throw new Error('ADMIN_USERNAME y ADMIN_PASSWORD (mínimo 8 caracteres) deben configurarse juntos');
-  }
-
-  const passwordHash = await bcrypt.hash(password, Number(process.env.BCRYPT_ROUNDS || 12));
-  await pool.query(
-    `INSERT INTO users (username, password_hash, role)
-     VALUES ($1, $2, 'administrador')
-     ON CONFLICT (username)
-     DO UPDATE SET password_hash = EXCLUDED.password_hash, role = 'administrador'`,
-    [username.toLowerCase(), passwordHash],
-  );
-  console.log(`Administrador CORE preparado: ${username.toLowerCase()}`);
 }
 
 module.exports = bootstrapDatabase;
