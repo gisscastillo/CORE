@@ -206,7 +206,7 @@ Para apagar el servidor, regresa a la terminal y presiona `Ctrl + C`.
 
 ## Crear un usuario normal para demostrar los permisos
 
-El administrador puede registrar y editar. El usuario normal solo puede consultar. Con CORE encendido, abre una segunda terminal en VS Code con el botón `+` del panel de terminal y pega:
+El administrador puede registrar, consultar, editar y eliminar. El usuario normal solo puede consultar. Con CORE encendido, abre una segunda terminal en VS Code con el botón `+` del panel de terminal y pega:
 
 ```powershell
 $datos = @{ username = 'usuario@core.local'; password = 'UsuarioCore2026!' } | ConvertTo-Json
@@ -224,7 +224,7 @@ La contraseña del ejemplo es solo para una demostración local. No la uses en u
 
 ## Autenticación, permisos y endpoints
 
-- `administrador`: consulta, registra y actualiza recursos.
+- `administrador`: consulta, registra, actualiza y elimina recursos.
 - `usuario`: consulta la lista y el detalle.
 - HTTP 401 significa que falta el token o que el token no es válido.
 - HTTP 403 significa que el usuario inició sesión, pero su rol no permite esa acción.
@@ -240,6 +240,7 @@ Estas son las rutas que puede revisar el profesor:
 | GET | `/api/resources/:id` | Ambos roles | Consultar un recurso |
 | POST | `/api/resources` | Administrador | Registrar recurso |
 | PUT | `/api/resources/:id` | Administrador | Actualizar recurso |
+| DELETE | `/api/resources/:id` | Administrador | Eliminar recurso |
 
 ## Ejecutar las pruebas y abrir la cobertura
 
@@ -252,7 +253,7 @@ No necesitas tener CORE encendido ni PostgreSQL abierto para estas pruebas.
 npm run test:coverage
 ```
 
-3. Espera a que aparezca `Tests: 27 passed, 27 total`.
+3. Espera a que aparezca `Tests: 30 passed, 30 total`.
 4. Confirma que statements, branches, functions y lines están por encima de 80 %.
 5. Para abrir el reporte visual, en VS Code busca este archivo y ábrelo en el navegador:
 
@@ -264,11 +265,11 @@ La ejecución verificada del proyecto obtuvo:
 
 | Métrica | Resultado |
 |---|---:|
-| Pruebas | 27/27 aprobadas |
-| Statements | 99.31 % |
-| Branches | 91.11 % |
+| Pruebas | 30/30 aprobadas |
+| Statements | 99.35 % |
+| Branches | 91.48 % |
 | Functions | 100 % |
-| Lines | 99.30 % |
+| Lines | 99.34 % |
 
 ## Subir CORE a GitHub
 
@@ -440,7 +441,7 @@ Marca cada casilla conforme avances:
 - [ ] Ejecutar `npm run db:init`.
 - [ ] Ejecutar `npm run create:admin`.
 - [ ] Ejecutar `npm run dev` y probar el login.
-- [ ] Registrar y editar un recurso.
+- [ ] Registrar, consultar, editar y eliminar un recurso.
 - [ ] Ejecutar `npm run test:coverage`.
 - [ ] Subir a GitHub y comprobar el job de pruebas.
 - [ ] Crear Render y comprobar la URL pública.

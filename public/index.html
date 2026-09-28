@@ -3,37 +3,44 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b203a">
   <title>CORE | Gestión de recursos</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/styles.css?v=4">
 </head>
 <body>
   <main id="loginView" class="login-shell">
     <section class="brand-panel">
-      <div class="brand-glow glow-one"></div><div class="brand-glow glow-two"></div>
-      <div class="brand-mark"><span>C</span></div>
-      <div class="system-pill"><i></i> Plataforma segura y centralizada</div>
-      <p class="eyebrow">Control organizacional</p>
-      <h1>Los recursos de tu organización, en un solo lugar.</h1>
-      <p class="brand-copy">Consulta disponibilidad, ubicación y estado de cada equipo con una vista clara y confiable.</p>
-      <div class="feature-row"><span>✓</span> Inventario centralizado</div>
-      <div class="feature-row"><span>✓</span> Acceso seguro por roles</div>
-      <div class="feature-row"><span>✓</span> Seguimiento en tiempo real</div>
+      <div class="brand-orbit orbit-one"></div>
+      <div class="brand-orbit orbit-two"></div>
+      <div class="brand-mark" aria-hidden="true">C</div>
+      <p class="eyebrow eyebrow-light">Resource Management</p>
+      <h1>Todo tu inventario.<br><span>Mucho más claro.</span></h1>
+      <p class="brand-copy">Consulta, organiza y administra los recursos de tu organización desde una experiencia simple y visual.</p>
+      <div class="feature-list">
+        <div><span>01</span><p><strong>Encuentra rápido</strong><small>Filtros y búsqueda instantánea.</small></p></div>
+        <div><span>02</span><p><strong>Conoce cada recurso</strong><small>Detalles, estado y ubicación.</small></p></div>
+        <div><span>03</span><p><strong>Decide mejor</strong><small>Resumen visual del inventario.</small></p></div>
+      </div>
     </section>
+
     <section class="login-panel">
       <form id="loginForm" class="login-card">
-        <div class="login-card-top"><div class="logo"><span>CORE</span><small>Resource Management</small></div><span class="access-badge">Acceso seguro</span></div>
-        <h2>Bienvenido</h2>
-        <p class="muted">Inicia sesión para acceder al panel.</p>
+        <div class="login-card-top">
+          <div class="logo"><span>CORE</span><small>Resource Management</small></div>
+          <span class="access-badge">Portal de acceso</span>
+        </div>
+        <div class="login-heading">
+          <p class="eyebrow">Comienza aquí</p>
+          <h2>Bienvenido de nuevo</h2>
+          <p class="muted">Ingresa tus datos para abrir tu espacio de trabajo.</p>
+        </div>
         <label for="username">Correo electrónico</label>
-        <input id="username" name="username" type="email" autocomplete="username" placeholder="usuario@organizacion.com" required>
+        <div class="input-wrap"><span aria-hidden="true">@</span><input id="username" name="username" type="email" autocomplete="username" placeholder="usuario@organizacion.com" required></div>
         <label for="password">Contraseña</label>
-        <div class="password-field"><input id="password" name="password" type="password" autocomplete="current-password" minlength="8" placeholder="••••••••" required><button id="togglePassword" type="button" aria-label="Mostrar contraseña" title="Mostrar contraseña">Ver</button></div>
+        <div class="input-wrap password-field"><span aria-hidden="true">●</span><input id="password" name="password" type="password" autocomplete="current-password" minlength="8" placeholder="••••••••" required><button id="togglePassword" type="button" aria-label="Mostrar contraseña">Ver</button></div>
         <p id="loginError" class="form-error" role="alert"></p>
-        <button class="btn btn-primary full" type="submit">Iniciar sesión</button>
-        <p class="secure-note"><span>✓</span> Sesión protegida con autenticación JWT</p>
+        <button class="btn btn-primary full" type="submit"><span>Entrar a CORE</span><span aria-hidden="true">→</span></button>
+        <p class="login-help">Tu contenido se adapta automáticamente a tu perfil.</p>
       </form>
     </section>
   </main>
@@ -41,49 +48,129 @@
   <div id="appView" class="app-shell hidden">
     <aside class="sidebar">
       <div class="logo logo-light"><span>CORE</span><small>Resource Management</small></div>
-      <nav><button class="nav-item active">▦ <span>Recursos</span></button></nav>
+      <nav aria-label="Navegación principal">
+        <p class="nav-label">Espacio de trabajo</p>
+        <button class="nav-item active" type="button"><span class="nav-icon">⌂</span><span>Resumen</span></button>
+        <button class="nav-item" type="button" data-focus="inventory"><span class="nav-icon">▦</span><span>Inventario</span><span class="nav-count" id="navResourceCount">0</span></button>
+      </nav>
+      <div class="sidebar-tip">
+        <span>✦</span>
+        <p><strong id="sidebarTipTitle">Vista personal</strong><small id="sidebarTipText">Selecciona una tarjeta para consultar sus detalles.</small></p>
+      </div>
       <div class="sidebar-footer">
         <div class="avatar" id="avatar">U</div>
-        <div><strong id="sidebarUser">Usuario</strong><small id="sidebarRole">Rol</small></div>
-        <button id="logoutButton" class="icon-button" title="Cerrar sesión">↪</button>
+        <div class="user-meta"><strong id="sidebarUser">Usuario</strong><small id="sidebarRole">Rol</small></div>
+        <button id="logoutButton" class="icon-button logout-button" type="button" title="Cerrar sesión" aria-label="Cerrar sesión">↪</button>
       </div>
     </aside>
-    <div class="content">
+
+    <main class="content">
       <header class="topbar">
-        <div><p class="eyebrow">Panel de control</p><h1>Gestión de recursos</h1></div>
-        <div class="topbar-actions"><span class="live-status"><i></i> Sistema activo</span><button id="newResourceButton" class="btn btn-primary admin-only">+ Registrar recurso</button></div>
+        <div>
+          <p class="eyebrow" id="roleEyebrow">Panel de recursos</p>
+          <h1 id="pageTitle">Explora tus recursos</h1>
+          <p class="page-subtitle" id="pageSubtitle">Consulta la disponibilidad y abre cualquier tarjeta para ver más información.</p>
+        </div>
+        <div class="topbar-actions">
+          <span class="live-status"><i></i> En línea</span>
+          <button id="newResourceButton" class="btn btn-primary admin-only" type="button"><span>＋</span> Nuevo recurso</button>
+        </div>
       </header>
-      <section id="summary" class="stats-grid"></section>
-      <section class="table-card">
-        <div class="table-header">
-          <div><h2>Inventario</h2><p class="muted" id="resourceCount">Cargando recursos…</p></div>
-          <input id="searchInput" class="search" type="search" placeholder="Buscar por nombre, categoría o ubicación">
+
+      <section id="summary" class="stats-grid" aria-label="Resumen del inventario"></section>
+
+      <section class="workspace" id="inventorySection">
+        <div class="workspace-heading">
+          <div>
+            <p class="eyebrow">Inventario</p>
+            <h2 id="inventoryTitle">Recursos disponibles</h2>
+            <p class="muted" id="resourceCount">Cargando recursos…</p>
+          </div>
+          <div class="toolbar">
+            <label class="search-wrap" for="searchInput"><span>⌕</span><input id="searchInput" type="search" placeholder="Buscar recurso, categoría o ubicación"></label>
+            <select id="statusFilter" class="filter-select" aria-label="Filtrar por estado">
+              <option value="">Todos los estados</option>
+              <option value="Disponible">Disponibles</option>
+              <option value="Asignado">Asignados</option>
+              <option value="Mantenimiento">En mantenimiento</option>
+              <option value="Baja">Dados de baja</option>
+            </select>
+          </div>
         </div>
+
         <div id="globalMessage" class="message hidden" role="status"></div>
-        <div class="table-scroll">
-          <table>
-            <thead><tr><th>ID</th><th>Nombre</th><th>Categoría</th><th>Estado</th><th>Ubicación</th><th class="admin-only">Acciones</th></tr></thead>
-            <tbody id="resourceRows"></tbody>
-          </table>
+        <div id="resourceGrid" class="resource-grid"></div>
+        <div id="emptyState" class="empty-state hidden">
+          <div>⌕</div><h3>No encontramos resultados</h3><p>Prueba con otra palabra o cambia el filtro de estado.</p>
+          <button id="clearFiltersButton" class="btn btn-secondary" type="button">Limpiar filtros</button>
         </div>
-        <div id="emptyState" class="empty hidden">No hay recursos que mostrar.</div>
+
+        <section id="adminManagement" class="admin-management admin-only">
+          <div class="section-divider"><span>Administración</span></div>
+          <div class="management-card">
+            <div class="management-header"><div><h2>Control del inventario</h2><p class="muted">Edita, consulta o elimina registros desde un solo lugar.</p></div><span class="role-badge">Administrador</span></div>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th>Recurso</th><th>Categoría</th><th>Estado</th><th>Ubicación</th><th>Acciones</th></tr></thead>
+                <tbody id="resourceRows"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
       </section>
-    </div>
+    </main>
   </div>
 
-  <dialog id="resourceDialog">
-    <form id="resourceForm" method="dialog" class="resource-form">
-      <div class="modal-header"><div><p class="eyebrow">Inventario CORE</p><h2 id="dialogTitle">Registrar recurso</h2></div><button id="closeDialog" type="button" class="icon-button">×</button></div>
+  <dialog id="detailDialog" class="detail-dialog">
+    <div class="detail-shell">
+      <button id="closeDetailDialog" type="button" class="modal-close" aria-label="Cerrar">×</button>
+      <div id="detailHero" class="detail-hero"><div id="detailIcon" class="detail-icon">▣</div><span id="detailStatus" class="badge">Disponible</span></div>
+      <div class="detail-content">
+        <p class="eyebrow">Ficha del recurso</p>
+        <h2 id="detailName">Recurso</h2>
+        <p id="detailCategory" class="detail-category">Categoría</p>
+        <div class="detail-grid">
+          <div><span>Identificador</span><strong id="detailId">#1</strong></div>
+          <div><span>Ubicación</span><strong id="detailLocation">—</strong></div>
+          <div><span>Registrado</span><strong id="detailCreated">—</strong></div>
+          <div><span>Último cambio</span><strong id="detailUpdated">—</strong></div>
+        </div>
+        <div class="detail-note"><span>i</span><p id="detailNote">Este recurso forma parte del inventario CORE.</p></div>
+        <div class="modal-actions">
+          <button id="detailDeleteButton" type="button" class="btn btn-danger admin-only">Eliminar</button>
+          <button id="detailEditButton" type="button" class="btn btn-primary admin-only">Editar recurso</button>
+          <button id="detailCloseButton" type="button" class="btn btn-secondary user-only">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="resourceDialog" class="form-dialog">
+    <form id="resourceForm" class="resource-form">
+      <div class="modal-header"><div><p class="eyebrow">Inventario CORE</p><h2 id="dialogTitle">Registrar recurso</h2><p class="muted">Completa la información para mantener el inventario actualizado.</p></div><button id="closeDialog" type="button" class="modal-close" aria-label="Cerrar">×</button></div>
       <input id="resourceId" type="hidden">
-      <label for="resourceName">Nombre</label><input id="resourceName" maxlength="120" required>
-      <label for="resourceCategory">Categoría</label><input id="resourceCategory" maxlength="80" required>
-      <label for="resourceStatus">Estado</label>
-      <select id="resourceStatus" required><option>Disponible</option><option>Asignado</option><option>Mantenimiento</option><option>Baja</option></select>
-      <label for="resourceLocation">Ubicación</label><input id="resourceLocation" maxlength="120" required>
+      <div class="form-grid">
+        <label class="field field-wide" for="resourceName"><span>Nombre del recurso</span><input id="resourceName" maxlength="120" placeholder="Ej. Laptop Dell Latitude" required></label>
+        <label class="field" for="resourceCategory"><span>Categoría</span><input id="resourceCategory" maxlength="80" placeholder="Ej. Cómputo" required></label>
+        <label class="field" for="resourceStatus"><span>Estado</span><select id="resourceStatus" required><option>Disponible</option><option>Asignado</option><option>Mantenimiento</option><option>Baja</option></select></label>
+        <label class="field field-wide" for="resourceLocation"><span>Ubicación</span><input id="resourceLocation" maxlength="120" placeholder="Ej. Oficina principal" required></label>
+      </div>
       <p id="resourceError" class="form-error" role="alert"></p>
-      <div class="modal-actions"><button id="cancelDialog" type="button" class="btn btn-secondary">Cancelar</button><button type="submit" class="btn btn-primary">Guardar recurso</button></div>
+      <div class="modal-actions"><button id="cancelDialog" type="button" class="btn btn-secondary">Cancelar</button><button id="saveResourceButton" type="submit" class="btn btn-primary">Guardar recurso</button></div>
     </form>
   </dialog>
-  <script src="/app.js" defer></script>
+
+  <div id="confirmDialog" class="confirm-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+    <section class="confirm-dialog">
+      <div class="confirm-content">
+      <div class="warning-icon">!</div>
+      <h2 id="confirmTitle">¿Eliminar este recurso?</h2>
+      <p>Se quitará <strong id="deleteResourceName">este recurso</strong> del inventario. Esta acción no se puede deshacer.</p>
+      <div class="modal-actions"><button id="cancelDeleteButton" type="button" class="btn btn-secondary">Conservar</button><button id="confirmDeleteButton" type="button" class="btn btn-danger">Sí, eliminar</button></div>
+      </div>
+    </section>
+  </div>
+
+  <script src="/app.js?v=6" defer></script>
 </body>
 </html>

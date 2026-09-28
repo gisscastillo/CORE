@@ -9,7 +9,27 @@ const { notFound, errorHandler } = require('./middleware/errorHandler');
 const app = express();
 
 app.disable('x-powered-by');
-app.use(helmet({ contentSecurityPolicy: false }));
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'"],
+      styleSrc: ["'self'"],
+      fontSrc: ["'self'"],
+      imgSrc: ["'self'", 'data:'],
+      connectSrc: ["'self'"],
+      objectSrc: ["'none'"],
+      frameAncestors: ["'none'"],
+      baseUri: ["'self'"],
+      formAction: ["'self'"],
+    },
+  },
+  crossOriginEmbedderPolicy: { policy: 'require-corp' },
+}));
+app.use((_req, res, next) => {
+  res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
+  next();
+});
 app.use(express.json({ limit: '20kb' }));
 app.use(express.static(path.join(__dirname, '..', 'public')));
 

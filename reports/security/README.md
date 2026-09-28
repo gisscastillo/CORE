@@ -1,24 +1,22 @@
-# Reporte de seguridad
+# Reporte de seguridad OWASP ZAP
 
-Estado: **PENDIENTE DE EJECUCIÓN**.
+Estado: **EJECUTADO**.
 
-OWASP ZAP no se ejecutó en este equipo porque Docker no está disponible y todavía no existe una URL pública del entorno de prueba. No se creó un reporte ficticio.
+El escaneo activo OWASP ZAP se ejecutó el **27 de septiembre de 2026** contra el entorno de prueba autorizado:
 
-Para obtener evidencia real:
+- URL: `https://core-testing-0r6l.onrender.com`
+- GitHub Actions: ejecución `36358985769`
+- Resultado técnico del workflow: exitoso
+- Evidencias: `owasp-zap-report.html`, `owasp-zap-report.json` y `owasp-zap-report.md`
 
-1. Despliega CORE en el entorno `testing`.
-2. En GitHub abre **Actions → CORE OWASP ZAP → Run workflow**.
-3. Confirma que tienes autorización para realizar un escaneo activo y escribe la URL pública completa, por ejemplo `https://core-testing.onrender.com`.
-4. Descarga el artefacto `core-owasp-zap-report` al finalizar.
-5. Copia `owasp-zap-report.html` y `owasp-zap-report.json` en esta carpeta.
+## Resultado resumido
 
-Alternativa local con Docker, desde la raíz del proyecto:
+- No se detectaron alertas de SQL Injection ni Cross-Site Scripting (XSS).
+- Se detectaron alertas medias relacionadas con CSP, recursos externos, ausencia de token CSRF y cabeceras del proxy.
+- Se eliminaron las fuentes externas y se añadió una política CSP estricta, `Cross-Origin-Embedder-Policy` y `Permissions-Policy` después del escaneo.
+- La alerta CSRF se revisó como posible falso positivo: la API usa JWT en el encabezado `Authorization` y no cookies de sesión enviadas automáticamente por el navegador.
+- La cabecera de proxy corresponde a la infraestructura administrada por Render y no a datos sensibles de la aplicación.
 
-```powershell
-docker run --rm -v "${PWD}:/zap/wrk/:rw" ghcr.io/zaproxy/zaproxy:stable `
-  zap-full-scan.py -t http://host.docker.internal:3000 -a -j -m 10 `
-  -r reports/security/owasp-zap-report.html `
-  -J reports/security/owasp-zap-report.json
-```
+El reporte completo conserva el detalle por URL, nivel de riesgo, evidencia y recomendación. Las mejoras posteriores deben publicarse y volver a escanearse para producir la evidencia comparativa final.
 
-El full scan incluye spider y pruebas activas, por lo que debe ejecutarse exclusivamente contra un entorno de prueba propio o autorizado.
+> El escaneo activo se realizó exclusivamente contra el entorno de prueba propio del proyecto.

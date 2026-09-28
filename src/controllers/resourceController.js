@@ -49,4 +49,25 @@ async function updateResource(req, res) {
   res.json({ resource: result.rows[0] });
 }
 
-module.exports = { listResources, getResource, createResource, updateResource };
+async function deleteResource(req, res) {
+  const result = await pool.query(
+    `DELETE FROM resources
+     WHERE id = $1
+     RETURNING ${columns}`,
+    [req.validated.id],
+  );
+
+  if (result.rowCount === 0) {
+    throw new AppError('Recurso no encontrado', 404);
+  }
+
+  res.json({ resource: result.rows[0], message: 'Recurso eliminado correctamente' });
+}
+
+module.exports = {
+  listResources,
+  getResource,
+  createResource,
+  updateResource,
+  deleteResource,
+};

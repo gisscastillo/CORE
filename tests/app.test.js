@@ -173,6 +173,26 @@ describe('gestión de recursos y roles', () => {
     expect(response.status).toBe(403);
   });
 
+  test('administrador puede eliminar un recurso', async () => {
+    pool.query.mockResolvedValueOnce({ rowCount: 1, rows: [resource] });
+    const response = await request(app).delete('/api/resources/1').set('Authorization', `Bearer ${adminToken}`);
+    expect(response.status).toBe(200);
+    expect(response.body.message).toBe('Recurso eliminado correctamente');
+    expect(pool.query.mock.calls[0][1]).toEqual([1]);
+  });
+
+  test('usuario normal no puede eliminar un recurso', async () => {
+    const response = await request(app).delete('/api/resources/1').set('Authorization', `Bearer ${userToken}`);
+    expect(response.status).toBe(403);
+    expect(pool.query).not.toHaveBeenCalled();
+  });
+
+  test('eliminación responde 404 si el recurso no existe', async () => {
+    pool.query.mockResolvedValueOnce({ rowCount: 0, rows: [] });
+    const response = await request(app).delete('/api/resources/55').set('Authorization', `Bearer ${adminToken}`);
+    expect(response.status).toBe(404);
+  });
+
   test('actualización responde 404 si no existe', async () => {
     pool.query.mockResolvedValueOnce({ rowCount: 0, rows: [] });
     const response = await request(app).put('/api/resources/55').set('Authorization', `Bearer ${adminToken}`).send(resource);

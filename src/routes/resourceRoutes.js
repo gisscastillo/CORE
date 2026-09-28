@@ -22,5 +22,6 @@ router.get('/', asyncHandler(controller.listResources));
 router.get('/:id', idRule, validate, asyncHandler(controller.getResource));
 router.post('/', authorize('administrador'), resourceRules, validate, asyncHandler(controller.createResource));
 router.put('/:id', authorize('administrador'), [idRule, ...resourceRules], validate, asyncHandler(controller.updateResource));
+router.delete('/:id', authorize('administrador'), idRule, validate, asyncHandler(controller.deleteResource));
 
 module.exports = router;
