@@ -120,12 +120,34 @@ function renderSummary() {
     { label: 'Asignados', count: state.resources.filter((item) => item.estado === 'Asignado').length, icon: '→', status: 'Asignado', tone: 'purple' },
     { label: 'Requieren atención', count: state.resources.filter((item) => ['Mantenimiento', 'Baja'].includes(item.estado)).length, icon: '!', status: 'Mantenimiento', tone: 'orange' },
   ];
-  $('summary').innerHTML = groups.map((item) => `
-    <button class="stat stat-${item.tone}${state.status === item.status ? ' selected' : ''}" type="button" data-status="${item.status}">
-      <span class="stat-icon">${item.icon}</span>
-      <span class="stat-copy"><small>${item.label}</small><strong>${item.count}</strong></span>
-      <span class="stat-arrow">↗</span>
-    </button>`).join('');
+  const summary = $('summary');
+  summary.replaceChildren();
+
+  groups.forEach((item) => {
+    const button = document.createElement('button');
+    button.className = `stat stat-${item.tone}${state.status === item.status ? ' selected' : ''}`;
+    button.type = 'button';
+    button.dataset.status = item.status;
+
+    const icon = document.createElement('span');
+    icon.className = 'stat-icon';
+    icon.textContent = item.icon;
+
+    const copy = document.createElement('span');
+    copy.className = 'stat-copy';
+    const label = document.createElement('small');
+    label.textContent = item.label;
+    const count = document.createElement('strong');
+    count.textContent = String(item.count);
+    copy.append(label, count);
+
+    const arrow = document.createElement('span');
+    arrow.className = 'stat-arrow';
+    arrow.textContent = '↗';
+
+    button.append(icon, copy, arrow);
+    summary.append(button);
+  });
 }
 
 function renderResources() {

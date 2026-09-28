@@ -54,7 +54,7 @@ jobs:
           JWT_SECRET: ci-only-secret-with-more-than-thirty-two-characters
       - name: Analizar en SonarCloud
         if: env.SONAR_TOKEN != ''
-        uses: SonarSource/sonarqube-scan-action@v5
+        uses: SonarSource/sonarqube-scan-action@v6
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:

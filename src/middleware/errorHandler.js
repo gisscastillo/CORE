@@ -4,7 +4,12 @@ function notFound(req, res) {
 
 function errorHandler(error, req, res, _next) {
   if (process.env.NODE_ENV !== 'test') {
-    console.error(`[${req.method} ${req.originalUrl}]`, error.message);
+    const logEntry = {
+      method: String(req.method).replace(/[\r\n]/g, ''),
+      path: String(req.originalUrl).replace(/[\r\n]/g, ''),
+      message: String(error.message).replace(/[\r\n]/g, ' '),
+    };
+    console.error(JSON.stringify(logEntry));
   }
 
   const statusCode = error.statusCode || 500;
