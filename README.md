@@ -435,20 +435,20 @@ En la pestaña **Secrets** crea:
 
 Marca cada casilla conforme avances:
 
-- [ ] Instalar o abrir PostgreSQL y pgAdmin.
-- [ ] Crear `core_db`.
-- [ ] Crear y completar `.env`.
-- [ ] Ejecutar `npm run db:init`.
-- [ ] Ejecutar `npm run create:admin`.
-- [ ] Ejecutar `npm run dev` y probar el login.
-- [ ] Registrar, consultar, editar y eliminar un recurso.
-- [ ] Ejecutar `npm run test:coverage`.
-- [ ] Subir a GitHub y comprobar el job de pruebas.
-- [ ] Crear Render y comprobar la URL pública.
-- [ ] Confirmar que `deploy-testing` esté verde en GitHub Actions.
+- [x] Instalar o abrir PostgreSQL y pgAdmin.
+- [x] Crear `core_db`.
+- [x] Crear y completar `.env`.
+- [x] Ejecutar `npm run db:init`.
+- [x] Ejecutar `npm run create:admin`.
+- [x] Ejecutar `npm run dev` y probar el login.
+- [x] Registrar, consultar, editar y eliminar un recurso.
+- [x] Ejecutar `npm run test:coverage`.
+- [x] Subir a GitHub y comprobar el job de pruebas.
+- [x] Crear Render y comprobar la URL pública.
+- [x] Confirmar que `deploy-testing` esté verde en GitHub Actions.
 - [ ] Ejecutar SonarCloud y registrar métricas reales.
-- [ ] Ejecutar OWASP ZAP y guardar sus reportes reales.
-- [ ] Actualizar el ZIP final después de incorporar las evidencias.
+- [x] Ejecutar OWASP ZAP y guardar sus reportes reales.
+- [x] Actualizar el ZIP final después de incorporar las evidencias disponibles.
 
 ## Estructura y evidencias
 
@@ -461,7 +461,7 @@ scripts/             inicialización DB y creación del administrador
 .github/workflows/   CI/CD, SonarCloud y OWASP ZAP
 reports/unit-tests/  JUnit y cobertura real
 reports/security/    reporte real de OWASP ZAP
-reports/sonar/       métricas reales de SonarCloud
+reports/sonar/       estado verificable y guía para completar SonarCloud
 docs/                informe académico de cierre
 ```
 
@@ -469,8 +469,8 @@ docs/                informe académico de cierre
 
 El ZIP final debe excluir `.env`, `node_modules`, cachés y credenciales. Antes de entregarlo:
 
-1. Confirma que las evidencias reales de ZAP y Sonar estén en `reports/`.
+1. Confirma que las evidencias reales de ZAP estén en `reports/security/` y que SonarCloud ya no figure como pendiente.
 2. Confirma que `.env` no esté dentro de la carpeta de entrega.
-3. Incluye el repositorio completo y `INFORME_CIERRE_CORE.md`.
+3. Incluye el repositorio Git completo y `INFORME_CIERRE_CORE.docx`.
 4. Abre el ZIP una vez para comprobar que no esté vacío o dañado.
 5. Conserva una copia de respaldo antes de subirlo a la plataforma del profesor.
