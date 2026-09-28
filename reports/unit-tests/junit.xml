@@ -1,65 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="30" failures="0" errors="0" time="7.02">
-  <testsuite name="rutas generales" errors="0" failures="0" skipped="0" timestamp="2026-09-28T02:11:36" time="3.479" tests="30">
-    <testcase classname="rutas generales expone el estado del servicio" name="rutas generales expone el estado del servicio" time="0.028">
+<testsuites name="jest tests" tests="30" failures="0" errors="0" time="21.223">
+  <testsuite name="rutas generales" errors="0" failures="0" skipped="0" timestamp="2026-09-28T02:34:12" time="15.717" tests="30">
+    <testcase classname="rutas generales expone el estado del servicio" name="rutas generales expone el estado del servicio" time="0.039">
     </testcase>
-    <testcase classname="rutas generales responde 404 sin exponer detalles" name="rutas generales responde 404 sin exponer detalles" time="0.006">
+    <testcase classname="rutas generales responde 404 sin exponer detalles" name="rutas generales responde 404 sin exponer detalles" time="0.007">
     </testcase>
-    <testcase classname="autenticación login correcto genera un JWT con id y rol" name="autenticación login correcto genera un JWT con id y rol" time="0.042">
+    <testcase classname="autenticación login correcto genera un JWT con id y rol" name="autenticación login correcto genera un JWT con id y rol" time="0.38">
     </testcase>
-    <testcase classname="autenticación rechaza credenciales incorrectas" name="autenticación rechaza credenciales incorrectas" time="0.013">
+    <testcase classname="autenticación rechaza credenciales incorrectas" name="autenticación rechaza credenciales incorrectas" time="0.015">
     </testcase>
-    <testcase classname="autenticación rechaza usuario inexistente" name="autenticación rechaza usuario inexistente" time="0.007">
+    <testcase classname="autenticación rechaza usuario inexistente" name="autenticación rechaza usuario inexistente" time="0.008">
     </testcase>
-    <testcase classname="autenticación valida el formato de login" name="autenticación valida el formato de login" time="0.005">
+    <testcase classname="autenticación valida el formato de login" name="autenticación valida el formato de login" time="0.008">
     </testcase>
-    <testcase classname="autenticación registra un usuario con hash y rol usuario" name="autenticación registra un usuario con hash y rol usuario" time="0.01">
+    <testcase classname="autenticación registra un usuario con hash y rol usuario" name="autenticación registra un usuario con hash y rol usuario" time="0.012">
     </testcase>
     <testcase classname="autenticación no registra un usuario duplicado" name="autenticación no registra un usuario duplicado" time="0.005">
     </testcase>
-    <testcase classname="protección JWT rechaza cuando falta el JWT" name="protección JWT rechaza cuando falta el JWT" time="0.005">
+    <testcase classname="protección JWT rechaza cuando falta el JWT" name="protección JWT rechaza cuando falta el JWT" time="0.008">
     </testcase>
-    <testcase classname="protección JWT rechaza JWT inválido" name="protección JWT rechaza JWT inválido" time="0.005">
+    <testcase classname="protección JWT rechaza JWT inválido" name="protección JWT rechaza JWT inválido" time="0.006">
     </testcase>
     <testcase classname="protección JWT rechaza JWT sin claims requeridos" name="protección JWT rechaza JWT sin claims requeridos" time="0.005">
     </testcase>
     <testcase classname="protección JWT permite acceso con JWT válido" name="protección JWT permite acceso con JWT válido" time="0.006">
     </testcase>
-    <testcase classname="gestión de recursos y roles consulta todos los recursos" name="gestión de recursos y roles consulta todos los recursos" time="0.005">
+    <testcase classname="gestión de recursos y roles consulta todos los recursos" name="gestión de recursos y roles consulta todos los recursos" time="0.009">
     </testcase>
-    <testcase classname="gestión de recursos y roles consulta un recurso individual" name="gestión de recursos y roles consulta un recurso individual" time="0.009">
+    <testcase classname="gestión de recursos y roles consulta un recurso individual" name="gestión de recursos y roles consulta un recurso individual" time="0.008">
     </testcase>
-    <testcase classname="gestión de recursos y roles responde 404 si el recurso no existe" name="gestión de recursos y roles responde 404 si el recurso no existe" time="0.006">
+    <testcase classname="gestión de recursos y roles responde 404 si el recurso no existe" name="gestión de recursos y roles responde 404 si el recurso no existe" time="0.008">
     </testcase>
-    <testcase classname="gestión de recursos y roles valida el ID individual" name="gestión de recursos y roles valida el ID individual" time="0.005">
+    <testcase classname="gestión de recursos y roles valida el ID individual" name="gestión de recursos y roles valida el ID individual" time="0.007">
     </testcase>
-    <testcase classname="gestión de recursos y roles administrador puede registrar recurso" name="gestión de recursos y roles administrador puede registrar recurso" time="0.006">
+    <testcase classname="gestión de recursos y roles administrador puede registrar recurso" name="gestión de recursos y roles administrador puede registrar recurso" time="0.007">
     </testcase>
-    <testcase classname="gestión de recursos y roles usuario normal no puede registrar recurso" name="gestión de recursos y roles usuario normal no puede registrar recurso" time="0.004">
+    <testcase classname="gestión de recursos y roles usuario normal no puede registrar recurso" name="gestión de recursos y roles usuario normal no puede registrar recurso" time="0.005">
     </testcase>
-    <testcase classname="gestión de recursos y roles administrador puede actualizar recurso" name="gestión de recursos y roles administrador puede actualizar recurso" time="0.005">
+    <testcase classname="gestión de recursos y roles administrador puede actualizar recurso" name="gestión de recursos y roles administrador puede actualizar recurso" time="0.007">
     </testcase>
-    <testcase classname="gestión de recursos y roles usuario normal no puede actualizar recurso" name="gestión de recursos y roles usuario normal no puede actualizar recurso" time="0.003">
+    <testcase classname="gestión de recursos y roles usuario normal no puede actualizar recurso" name="gestión de recursos y roles usuario normal no puede actualizar recurso" time="0.005">
     </testcase>
     <testcase classname="gestión de recursos y roles administrador puede eliminar un recurso" name="gestión de recursos y roles administrador puede eliminar un recurso" time="0.006">
     </testcase>
-    <testcase classname="gestión de recursos y roles usuario normal no puede eliminar un recurso" name="gestión de recursos y roles usuario normal no puede eliminar un recurso" time="0.004">
+    <testcase classname="gestión de recursos y roles usuario normal no puede eliminar un recurso" name="gestión de recursos y roles usuario normal no puede eliminar un recurso" time="0.006">
     </testcase>
     <testcase classname="gestión de recursos y roles eliminación responde 404 si el recurso no existe" name="gestión de recursos y roles eliminación responde 404 si el recurso no existe" time="0.004">
     </testcase>
-    <testcase classname="gestión de recursos y roles actualización responde 404 si no existe" name="gestión de recursos y roles actualización responde 404 si no existe" time="0.005">
+    <testcase classname="gestión de recursos y roles actualización responde 404 si no existe" name="gestión de recursos y roles actualización responde 404 si no existe" time="0.007">
     </testcase>
-    <testcase classname="gestión de recursos y roles rechaza datos incorrectos y estado fuera del catálogo" name="gestión de recursos y roles rechaza datos incorrectos y estado fuera del catálogo" time="0.005">
+    <testcase classname="gestión de recursos y roles rechaza datos incorrectos y estado fuera del catálogo" name="gestión de recursos y roles rechaza datos incorrectos y estado fuera del catálogo" time="0.006">
     </testcase>
     <testcase classname="gestión de recursos y roles sanitiza texto antes de enviarlo a PostgreSQL" name="gestión de recursos y roles sanitiza texto antes de enviarlo a PostgreSQL" time="0.004">
     </testcase>
-    <testcase classname="gestión de recursos y roles centraliza errores inesperados sin exponer el stack" name="gestión de recursos y roles centraliza errores inesperados sin exponer el stack" time="0.004">
+    <testcase classname="gestión de recursos y roles centraliza errores inesperados sin exponer el stack" name="gestión de recursos y roles centraliza errores inesperados sin exponer el stack" time="0.006">
     </testcase>
-    <testcase classname="inicio automático de la base de datos crea las tablas aunque no se configure administrador" name="inicio automático de la base de datos crea las tablas aunque no se configure administrador" time="0.023">
+    <testcase classname="inicio automático de la base de datos crea las tablas aunque no se configure administrador" name="inicio automático de la base de datos crea las tablas aunque no se configure administrador" time="0.022">
     </testcase>
-    <testcase classname="inicio automático de la base de datos crea o actualiza el administrador configurado" name="inicio automático de la base de datos crea o actualiza el administrador configurado" time="0.007">
+    <testcase classname="inicio automático de la base de datos crea o actualiza el administrador configurado" name="inicio automático de la base de datos crea o actualiza el administrador configurado" time="0.009">
     </testcase>
-    <testcase classname="inicio automático de la base de datos rechaza configuración incompleta del administrador" name="inicio automático de la base de datos rechaza configuración incompleta del administrador" time="0.003">
+    <testcase classname="inicio automático de la base de datos rechaza configuración incompleta del administrador" name="inicio automático de la base de datos rechaza configuración incompleta del administrador" time="0.004">
     </testcase>
   </testsuite>
 </testsuites>

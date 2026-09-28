@@ -17,6 +17,6 @@ Resultado:
 | Functions | 100 % |
 | Lines | 99.34 % |
 
-Todas las métricas superaron el umbral obligatorio de 80 %. El comando genera `junit.xml`, `coverage/index.html`, `coverage/lcov.info` y `coverage/coverage-summary.json` en este directorio. Los archivos generados están ignorados en Git para evitar evidencia obsoleta; se incluyen en el ZIP académico creado después de la ejecución verificada.
+Todas las métricas superaron el umbral obligatorio de 80 %. El comando genera `junit.xml`, `coverage/index.html`, `coverage/lcov.info` y `coverage/coverage-summary.json` en este directorio. La evidencia generada por la ejecución verificada se conserva en Git y también se incluye en el ZIP académico.
 
 La suite cubre login correcto e incorrecto, registro, validación, JWT faltante/inválido/válido, permisos de ambos roles, consultas, altas, actualizaciones, eliminaciones, sanitización, 404 y manejo centralizado de errores.
